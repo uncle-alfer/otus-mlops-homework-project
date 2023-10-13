@@ -2,4 +2,4 @@
 
 ## Пункт 1
 
-(Ссылка на бакет)[https://mlops-bucket-hw2.website.yandexcloud.net]
+[https://mlops-bucket-hw2.website.yandexcloud.net](Ссылка на бакет)
