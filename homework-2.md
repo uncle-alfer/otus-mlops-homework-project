@@ -6,7 +6,7 @@
 
 [Ссылка на бакет](https://mlops-bucket-hw2.website.yandexcloud.net)
 
-[Ссылка на бакет](https://mlops-bucket-hw2.website.yandexcloud.net/2019-08-22.txt)
+[Ссылка на первый объект в бакете](https://mlops-bucket-hw2.website.yandexcloud.net/2019-08-22.txt)
 
 ## Пункт 2
 
