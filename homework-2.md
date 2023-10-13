@@ -2,7 +2,11 @@
 
 ## Пункт 1
 
+Имя бакета: s3://mlops-bucket-hw2
+
 [Ссылка на бакет](https://mlops-bucket-hw2.website.yandexcloud.net)
+
+[Ссылка на бакет](https://mlops-bucket-hw2.website.yandexcloud.net/2019-08-22.txt)
 
 ## Пункт 2
 
