@@ -19,3 +19,17 @@ mkdir -p ./dags ./logs ./plugins ./config
 echo -e "AIRFLOW_UID=$(id -u)" > .env
 docker compose up airflow-init
 
+# заменить в docker-compose.yaml 
+# image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.6.1}
+# # build: .
+# на 
+# # image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.6.1}
+# build: .
+
+touch Dockerfile
+# содержимое:
+# FROM apache/airflow:2.8.1
+# ADD requirements.txt .
+# RUN pip install apache-airflow==${AIRFLOW_VERSION} -r requirements.txt
+
+touch requirements.txt
