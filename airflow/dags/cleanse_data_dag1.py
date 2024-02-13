@@ -45,7 +45,7 @@ send_file = SFTPOperator(
     dag=dag_spark
 )
 
-run_cmd = (
+run_cmd = SSHOperator(
     task_id="run_cmd",
     command="touch FOOOOCK.txt",
     ssh_hook=sshHook,
