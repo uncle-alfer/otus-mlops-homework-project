@@ -16,7 +16,7 @@ sudo apt install docker-ce -y
 curl -LfO 'https://airflow.apache.org/docs/apache-airflow/2.8.1/docker-compose.yaml'
 mkdir -p ./dags ./logs ./plugins ./config
 echo -e "AIRFLOW_UID=$(id -u)" > .env
-docker compose up airflow-init
+sudo docker compose up airflow-init
 
 # заменить в docker-compose.yaml 
 # image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.6.1}
