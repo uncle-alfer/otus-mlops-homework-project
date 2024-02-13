@@ -2,7 +2,7 @@ import airflow
 from datetime import timedelta
 from airflow import DAG
 # from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
-from airflow.providers.sftp.operators import sftp_operato
+from airflow.providers.sftp.operators.sftp import SFTPOperator
 from airflow.contrib.hooks import SSHHook
 from airflow.providers.ssh.operators.ssh import SSHOperator
 # from airflow.operators.bash import BashOperator
