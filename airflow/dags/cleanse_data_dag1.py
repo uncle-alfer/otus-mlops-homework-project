@@ -3,12 +3,13 @@ from datetime import timedelta
 from airflow import DAG
 # from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
 from airflow.providers.sftp.operators.sftp import SFTPOperator
-from airflow.providers.ssh.operators.ssh import SSHHook, SSHOperator
+from airflow.providers.ssh.operators.ssh import SSHHook
+from airflow.providers.ssh.operators.ssh import SSHOperator
 # from airflow.operators.bash import BashOperator
 from airflow.utils.dates import days_ago
 
 # sshHook = SSHHook(conn_id="ssh_default", key_file="/home/airflow/keys/ssh.key")
-sshHook = SSHHook(remote_host='', username='worker', key_file='/home/airflow/keys/ssh.key')
+sshHook = SSHHook(remote_host='51.250.72.126', username='worker', key_file='/opt/airflow/keys/id_ed25519')
 
 default_args = {
     'owner': 'airflow',
@@ -37,16 +38,19 @@ dag_spark = DAG(
 print("send_file_to_otjer_vm")
 send_file = SFTPOperator(
     task_id="send_file",
-    ssh_conn_id="ssh_default",
-    local_filepath="/home/airflow/utils/cleanse_data.py",
+    # ssh_conn_id="ssh_default",
+    ssh_hook=sshHook,
+    local_filepath="/opt/airflow/utils/cleanse_data.py",
     remote_filepath="/home/worker/utils/cleanse_data.py",
     operation="put",
+    create_intermediate_dirs=True,
     dag=dag_spark
 )
 
 run_cmd = SSHOperator(
     task_id="run_cmd",
     command="touch FOOOOCK.txt",
+    # ssh_conn_id="ssh_default",
     ssh_hook=sshHook,
     dag=dag_spark,
 )
