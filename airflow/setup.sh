@@ -33,3 +33,5 @@ touch Dockerfile
 # RUN pip install apache-airflow==${AIRFLOW_VERSION} -r requirements.txt
 
 touch requirements.txt
+
+# fill foloder /dags
