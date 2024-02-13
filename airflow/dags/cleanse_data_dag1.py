@@ -25,7 +25,7 @@ default_args = {
 }
 
 dag_spark = DAG(
-    dag_id = "sparkoperator",
+    dag_id = "sparkoperator1",
     default_args=default_args,
     # schedule_interval='0 0 * * *',
     schedule_interval='@once',
