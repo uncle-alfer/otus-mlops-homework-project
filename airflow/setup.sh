@@ -34,3 +34,9 @@ touch Dockerfile
 touch requirements.txt
 
 # fill foloder /dags
+
+# add folders utils & keys to docker-compose.yaml
+
+# add /keys/ssh.key
+
+sudo docker compose up --build
