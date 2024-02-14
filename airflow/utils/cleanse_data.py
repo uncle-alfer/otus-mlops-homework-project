@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-import findspark
+# import findspark
 import pandas as pd
 import numpy as np
 import pyspark.sql.functions as F
@@ -11,8 +11,8 @@ from pyspark.sql.types import StructType,StructField, StringType, IntegerType, D
 from pyspark.sql.functions import col,isnan,when,count, trim
 
 
-findspark.init()
-findspark.find()
+# findspark.init()
+# findspark.find()
 
 
 def setup_session():
@@ -27,6 +27,7 @@ def setup_session():
     return spark
 
 def read_raw_data():
+    spark = setup_session()
     schema = StructType(
         [
             StructField("tranaction_id",IntegerType(),True),
@@ -100,5 +101,5 @@ def save_cleansed_data_to_s3(df_):
 
     
 df = read_raw_data()
-df = cleanse_data()
+df = cleanse_data(df)
 save_cleansed_data_to_s3(df)
