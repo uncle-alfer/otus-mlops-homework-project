@@ -9,7 +9,7 @@ from airflow.providers.ssh.operators.ssh import SSHOperator
 from airflow.utils.dates import days_ago
 
 # sshHook = SSHHook(conn_id="ssh_default", key_file="/home/airflow/keys/ssh.key")
-sshHook = SSHHook(remote_host='158.160.61.61', username='ubuntu', key_file='/opt/airflow/keys/ssh.key')
+sshHook = SSHHook(remote_host='84.252.130.8', username='ubuntu', key_file='/opt/airflow/keys/ssh.key', cmd_timeout=None, conn_timeout = None)
 
 default_args = {
     'owner': 'airflow',
