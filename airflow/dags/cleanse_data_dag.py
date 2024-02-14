@@ -1,12 +1,18 @@
 import airflow
 from datetime import timedelta
 from airflow import DAG
-from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator 
-from airflow.operators.bash import BashOperator
+# from airflow.providers.apache.spark.operators.spark_submit import SparkSubmitOperator
+from airflow.providers.sftp.operators.sftp import SFTPOperator
+from airflow.providers.ssh.operators.ssh import SSHHook
+from airflow.providers.ssh.operators.ssh import SSHOperator
+# from airflow.operators.bash import BashOperator
 from airflow.utils.dates import days_ago
 
+# sshHook = SSHHook(conn_id="ssh_default", key_file="/home/airflow/keys/ssh.key")
+sshHook = SSHHook(remote_host='158.160.61.61', username='ubuntu', key_file='/opt/airflow/keys/id_ed25519')
+
 default_args = {
-    'owner': 'airflow',    
+    'owner': 'airflow',
     #'start_date': airflow.utils.dates.days_ago(2),
     # 'end_date': datetime(),
     # 'depends_on_past': False,
@@ -19,45 +25,37 @@ default_args = {
     'retry_delay': timedelta(minutes=5),
 }
 
-
 dag_spark = DAG(
-        dag_id = "sparkoperator",
-        default_args=default_args,
-        # schedule_interval='0 0 * * *',
-        schedule_interval='@once',	
-        dagrun_timeout=timedelta(minutes=10),
-        description='use case of sparkoperator in airflow',
-        start_date = airflow.utils.dates.days_ago(1)
+    dag_id = "sparkoperator1",
+    default_args=default_args,
+    # schedule_interval='0 0 * * *',
+    schedule_interval='0,30 * * * *',
+    dagrun_timeout=timedelta(minutes=10),
+    description='use case of sparkoperator in airflow',
+    start_date = airflow.utils.dates.days_ago(1)
 )
 
+print("send_file_to_otjer_vm")
+send_file = SFTPOperator(
+    task_id="send_file",
+    # ssh_conn_id="ssh_default",
+    ssh_hook=sshHook,
+    local_filepath="/opt/airflow/utils/cleanse_data.py",
+    remote_filepath="/home/worker/utils/cleanse_data.py",
+    operation="put",
+    create_intermediate_dirs=True,
+    dag=dag_spark
+)
 
-_bash_command = """hadoop distcp -D fs.s3a.bucket.dataproc-examples.endpoint=storage.yandexcloud.net -D fs.s3a.bucket.dataproc-examples.access.key=YCAJEB2u8asOP4dTzk6AZBrbJ -D fs.s3a.bucket.dataproc-examples.secret.key=YCPjXXHnwGim3NaPpRmkmJQmQq3V0PYuLnO7XCR7 -update -skipcrccheck -numListstatusThreads 10  s3a://mlops-hw3-vos/raw_data/ hdfs://rc1a-dataproc-m-1k6fa7ly0haz2jb5.mdb.yandexcloud.net/user/root/datasets/set02/"""
-
-print("get_data")
-get_data = BashOperator(
-    task_id="get_data",
-    bash_command=_bash_command,
+spark_submit= SSHOperator(
+    task_id="spark_submit",
+    command="spark-submit /home/worker/utils/cleanse_data.py",
+    # ssh_conn_id="ssh_default",
+    ssh_hook=sshHook,
     dag=dag_spark,
-    run_as_user='Otus_user'
-                )
+)
 
+send_file >> spark_submit
 
-# print('spark submit task to hdfs')
-# spark_submit = SparkSubmitOperator(
-#     task_id='spark_submit_task_to_hdfs', 
-#     application ='/home/ubuntu/utils/clean_data.py' ,
-#     conn_id = 'spark_local', 
-#     dag=dag_spark
-#     )
-
-clean_data = BashOperator(
-    task_id="clean_data",
-    bash_command=_bash_command,
-    dag=dag_spark,
-    run_as_user='Otus_user'
-                )
-
-get_data >> clean_data
-
-if __name__ == '__main__ ':
+if __name__ == "__main__":
     dag_spark.cli()
