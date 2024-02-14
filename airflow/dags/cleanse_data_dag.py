@@ -9,7 +9,7 @@ from airflow.providers.ssh.operators.ssh import SSHOperator
 from airflow.utils.dates import days_ago
 
 # sshHook = SSHHook(conn_id="ssh_default", key_file="/home/airflow/keys/ssh.key")
-sshHook = SSHHook(remote_host='158.160.61.61', username='ubuntu', key_file='/opt/airflow/keys/id_ed25519')
+sshHook = SSHHook(remote_host='158.160.61.61', username='ubuntu', key_file='/opt/airflow/keys/ssh.key')
 
 default_args = {
     'owner': 'airflow',
@@ -41,21 +41,31 @@ send_file = SFTPOperator(
     # ssh_conn_id="ssh_default",
     ssh_hook=sshHook,
     local_filepath="/opt/airflow/utils/cleanse_data.py",
-    remote_filepath="/home/worker/utils/cleanse_data.py",
+    remote_filepath="/home/ubuntu/utils/cleanse_data.py",
     operation="put",
     create_intermediate_dirs=True,
     dag=dag_spark
 )
 
-spark_submit= SSHOperator(
+copy_cmd = "hadoop distcp -D fs.s3a.bucket.dataproc-examples.endpoint=storage.yandexcloud.net -D fs.s3a.bucket.dataproc-examples.access.key=$ACCESS -D fs.s3a.bucket.dataproc-examples.secret.key=$SECRET -update -skipcrccheck -numListstatusThreads 10  s3a://mlops-hw3-vos/raw_data/ hdfs://rc1a-dataproc-m-g7gq6h57ys820c43.mdb.yandexcloud.net/user/root/datasets/set02/"
+
+copy_from_s3_to_hdfs = SSHOperator(
+    task_id="copy_from_s3_to_hdfs",
+    command=copy_cmd,
+    ssh_hook=sshHook,
+    dag=dag_spark,
+)
+
+spark_submit = SSHOperator(
     task_id="spark_submit",
-    command="spark-submit /home/worker/utils/cleanse_data.py",
+    command="spark-submit /home/ubuntu/utils/cleanse_data.py",
     # ssh_conn_id="ssh_default",
     ssh_hook=sshHook,
     dag=dag_spark,
 )
 
-send_file >> spark_submit
+
+send_file >> copy_from_s3_to_hdfs  >> spark_submit
 
 if __name__ == "__main__":
     dag_spark.cli()
