@@ -24,4 +24,5 @@ PS. в целях экономии времени и ресурсов один �
 
 ![4-3](https://github.com/uncle-alfer/otus-mlops-homework-project/assets/70284100/5a47cee7-03bd-4dfc-b710-632f828c0a86)
 
-
+Очищенные датасеты, сохраненные по итогам работы скрипта в кластере (data_cleansed_{datetime.now()}.parquet):
+![изображение](https://github.com/uncle-alfer/otus-mlops-homework-project/assets/70284100/c8a53180-06c1-433a-816f-6f925a8d2e54)
