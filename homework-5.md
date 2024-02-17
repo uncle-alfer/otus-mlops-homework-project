@@ -15,5 +15,7 @@
 
 
 Скрин бакета с сохраненными артефактами:
+![изображение](https://github.com/uncle-alfer/otus-mlops-homework-project/assets/70284100/fe32f8f1-6757-42eb-ae7d-2df61b176aec)
+
 ![изображение](https://github.com/uncle-alfer/otus-mlops-homework-project/assets/70284100/201302e2-ea0a-48c9-9341-5a407e9494c6)
 
