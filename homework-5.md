@@ -7,7 +7,7 @@
 
 [Ссылка на папку с ноутбуками для дз](https://github.com/uncle-alfer/otus-mlops-homework-project/tree/main/notebooks/hw4)
 
-
+[Ссылка на DAG для ежедневного переобучения](https://github.com/uncle-alfer/otus-mlops-homework-project/blob/main/airflow/dags/retrain.py)
 
 Скрины, демонстрирующие работу mlflow:
 ![изображение](https://github.com/uncle-alfer/otus-mlops-homework-project/assets/70284100/007214fa-9dbc-4822-a58a-28daf2b4fcce)
