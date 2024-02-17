@@ -28,22 +28,20 @@ def get_dataframe():
 
 
 def get_pipeline():
-    # indexer = ...
-    # onehot = ...
-    # assembler = ...
+    indexer = StringIndexer(inputCol='sex', outputCol='sex_idx')
+    onehot = OneHotEncoder(inputCols=['sex_idx'], outputCols=['sex_dummy'])
+    assembler = VectorAssembler(inputCols=['age', 'bmi', 'sex_dummy'], outputCol='features')
     regression = LinearRegression(featuresCol='features', labelCol='bp')
     
-    # pipeline = ...
-
-    # return pipeline
-    pass
+    pipeline = Pipeline(stages=[indexer, onehot, assembler, regression])
+    return pipeline
 
 
 def main(args):
     
+    os.environ["AWS_ACCESS_KEY_ID"] = ...
+    os.environ["AWS_SECRET_ACCESS_KEY"] = ...
     os.environ["MLFLOW_S3_ENDPOINT_URL"] = "https://storage.yandexcloud.net"
-    TRACKING_SERVER_HOST = "127.0.0.1"
-    mlflow.set_tracking_uri(f"http://{TRACKING_SERVER_HOST}:5000")
     logger.info("tracking URI: %s", {mlflow.get_tracking_uri()})
 
     logger.info("Creating Spark Session ...")
@@ -60,7 +58,6 @@ def main(args):
     experiment = client.get_experiment_by_name("pyspark_experiment")
     experiment_id = experiment.experiment_id
     
-    # Добавьте в название вашего run имя, по которому его можно будет найти в MLFlow
     run_name = 'My run name' + ' ' + str(datetime.now())
 
     with mlflow.start_run(run_name=run_name, experiment_id=experiment_id):
@@ -71,9 +68,9 @@ def main(args):
         model = inf_pipeline.fit(data)
         
         logger.info("Scoring the model ...")
-        # evaluator = ...
+        evaluator = RegressionEvaluator(labelCol='bp')
         predictions = model.transform(data)
-        # rmse = evaluator.evaluate(predictions)
+        rmse = evaluator.evaluate(predictions)
                     
         run_id = mlflow.active_run().info.run_id
         logger.info(f"Logging metrics to MLflow run {run_id} ...")
@@ -95,7 +92,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Model (Inference Pipeline) Training")
 
-    # При запуске используйте оригинальное имя 'Student_Name_flights_LR_only'
     parser.add_argument(
         "--output_artifact",
         type=str,
