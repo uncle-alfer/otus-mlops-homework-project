@@ -40,9 +40,9 @@ def get_pipeline():
 
 def main(args):
     
+    os.environ["AWS_ACCESS_KEY_ID"] = ...
+    os.environ["AWS_SECRET_ACCESS_KEY"] = ...
     os.environ["MLFLOW_S3_ENDPOINT_URL"] = "https://storage.yandexcloud.net"
-    TRACKING_SERVER_HOST = "127.0.0.1"
-    mlflow.set_tracking_uri(f"http://{TRACKING_SERVER_HOST}:5000")
     logger.info("tracking URI: %s", {mlflow.get_tracking_uri()})
 
     logger.info("Creating Spark Session ...")
@@ -59,8 +59,7 @@ def main(args):
     experiment = client.get_experiment_by_name("pyspark_experiment")
     experiment_id = experiment.experiment_id
     
-    # Добавьте в название вашего run имя, по которому его можно будет найти в MLFlow
-    run_name = 'My run name' + ' ' + str(datetime.now())
+    run_name = 'My run name 3' + ' ' + str(datetime.now())
 
     with mlflow.start_run(run_name=run_name, experiment_id=experiment_id):
         
@@ -68,18 +67,28 @@ def main(args):
 
         regression = inf_pipeline.getStages()[-1]
 
-        # paramGrid = ...
-
+        paramGrid = (ParamGridBuilder()
+            .addGrid(regression.fitIntercept, [True, False])
+            .addGrid(regression.regParam, [0.001, 0.01, 0.1, 1, 10])
+            .addGrid(regression.elasticNetParam, [0, 0.25, 0.5, 0.75, 1])
+            .build()         
+        )
+ 
         evaluator = RegressionEvaluator(labelCol='bp')
 
         # By default 80% of the data will be used for training, 20% for validation.
         trainRatio = 1 - args.val_frac
         # A TrainValidationSplit requires an Estimator, a set of Estimator ParamMaps, and an Evaluator.
-        # tvs = ...
+        tvs = TrainValidationSplit(
+            estimator=inf_pipeline,
+            estimatorParamMaps=paramGrid,
+            evaluator=evaluator,
+            trainRatio=trainRatio
+        )
 
         # Run TrainValidationSplit, and choose the best set of parameters.
         logger.info("Fitting new inference pipeline ...")
-        # model = tvs.fit(data)
+        model = tvs.fit(data)
 
         # Log params, metrics and model with MLFlow
         
@@ -127,7 +136,6 @@ if __name__ == "__main__":
         help="Size of the validation split. Fraction of the dataset.",
     )
 
-    # При запуске используйте оригинальное имя 'Student_Name_flights_LR_only'
     parser.add_argument(
         "--output_artifact",
         type=str,
