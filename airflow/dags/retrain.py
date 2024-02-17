@@ -23,15 +23,6 @@ dag_spark = DAG(
     start_date = airflow.utils.dates.days_ago(1)
 )
 
-# copy_cmd = "hadoop distcp -D fs.s3a.bucket.dataproc-examples.endpoint=storage.yandexcloud.net -D fs.s3a.bucket.dataproc-examples.access.key=$ACCESS -D fs.s3a.bucket.dataproc-examples.secret.key=$SECRET -update -skipcrccheck -numListstatusThreads 10  s3a://mlops-hw3-vos/raw_data/ hdfs://rc1a-dataproc-m-g7gq6h57ys820c43.mdb.yandexcloud.net/user/root/datasets/set02/"
-
-# copy_from_s3_to_hdfs = SSHOperator(
-#     task_id="copy_from_s3_to_hdfs",
-#     command=copy_cmd,
-#     ssh_hook=sshHook,
-#     dag=dag_spark,
-# )
-
 spark_submit = SSHOperator(
     task_id="spark_submit",
     command="~/otus-mlops-homework-project/notebooks/hw4/3_flights_pipe_withHP_solution.sh",
@@ -40,7 +31,7 @@ spark_submit = SSHOperator(
 )
 
 
-send_file >> copy_from_s3_to_hdfs  >> spark_submit
+spark_submit
 
 if __name__ == "__main__":
     dag_spark.cli()
