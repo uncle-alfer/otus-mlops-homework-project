@@ -7,3 +7,4 @@ matplotlib
 seaborn
 boto3
 awswrangler 
+fsspec
