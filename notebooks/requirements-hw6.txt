@@ -8,3 +8,4 @@ seaborn
 boto3
 awswrangler 
 fsspec
+s3fs
