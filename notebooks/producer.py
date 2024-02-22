@@ -10,6 +10,7 @@ fake = Faker()
 
 
 class RecordMetadata(NamedTuple):
+    key: int
     topic: str
     partition: int
     offset: int
@@ -31,7 +32,9 @@ def main():
     try:
         while True:
             record_md = send_message(producer, "clicks")
-            print(f"Msg sent. Topic: {record_md.topic}, partition:{record_md.partition}, offset:{record_md.offset}")
+            print(
+                f"Msg sent. Key: {record_md.key}, topic: {record_md.topic}, partition:{record_md.partition}, offset:{record_md.offset}"
+            )
             time.sleep(10)
     except KeyboardInterrupt:
         print(" KeyboardInterrupted!")
@@ -50,6 +53,7 @@ def send_message(producer: kafka.KafkaProducer, topic: str) -> RecordMetadata:
     # Block for 'synchronous' sends
     record_metadata = future.get(timeout=1)
     return RecordMetadata(
+        key=click["tranaction_id"],
         topic=record_metadata.topic,
         partition=record_metadata.partition,
         offset=record_metadata.offset,
