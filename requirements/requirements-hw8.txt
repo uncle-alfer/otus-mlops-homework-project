@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+s3fs
+boto3
+numpy
