@@ -1,3 +1,4 @@
+-c requirement-hw8.txt
 pandas
 scikit-learn
 python-dotenv
