@@ -1,3 +1,21 @@
 apiVersion: apps/v1
-lind: Deployment
+kind: Deployment
 metadata:
+  name: predictor-deployment
+  labels:
+    app: predictor
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: predictor
+  template:
+    metadata:
+      labels:
+        app: predictor
+    spec:
+      containers:
+      - name: predictor
+        image: mlops-hw8:latest
+        ports:
+        - containerPort: 80

@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+s3fs
+boto3
+joblib
+scikit-learn
