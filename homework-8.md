@@ -16,6 +16,10 @@
 - этот образ передан в качесте образа для deployment
 - для демонстрации были прокинуты порты из кластера на локальную машину
 
+Также был создан GitHub Action для коммитов и пул реквестов в ветку deploy.
+[Ссылка на пайплайн](https://github.com/uncle-alfer/otus-mlops-homework-project/blob/main/.github/workflows/docker-image.yml)
+[Ссылка на успешный запуск билда](https://github.com/uncle-alfer/otus-mlops-homework-project/actions/runs/8031015146/job/21938924694?pr=6)
+
 ## Скрины с демонстрацией работы
 
 ![Кластер](https://github.com/uncle-alfer/otus-mlops-homework-project/assets/70284100/5abab023-9914-4855-b052-1bb69e1240c1)
