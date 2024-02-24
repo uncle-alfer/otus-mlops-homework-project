@@ -1,12 +1,11 @@
 """App"""
 
-from io import BytesIO
+# from io import BytesIO
 
-import boto3
+# import boto3
 import joblib
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
 from pydantic import BaseModel
-from fastapi import Depends
 
 
 class Transaction(BaseModel):
@@ -17,6 +16,7 @@ class Transaction(BaseModel):
     tx_amount: float
     tx_time_seconds: int
     tx_time_days: int
+
 
 # TODO provide secrets to k8s and then read from bucket
 # bucket_name = "mlops-hw3-vos"
@@ -38,10 +38,10 @@ def healthcheck():
 @app.get("/predict")
 def predict(transaction: Transaction = Depends()):
     inf = [
-            int(transaction.terminal_id),
-            float(transaction.tx_amount),
-            int(transaction.tx_time_seconds),
-            int(transaction.tx_time_days),
-        ]
+        int(transaction.terminal_id),
+        float(transaction.tx_amount),
+        int(transaction.tx_time_seconds),
+        int(transaction.tx_time_days),
+    ]
     pred = model.predict([inf])
     return {"pred": int(pred)}
