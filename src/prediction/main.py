@@ -18,13 +18,14 @@ class Transaction(BaseModel):
     tx_time_seconds: int
     tx_time_days: int
 
-
-bucket_name = "mlops-hw3-vos"
-s3 = boto3.resource("s3")
-with BytesIO() as data:
-    s3.Bucket(bucket_name).download_fileobj("baseline_model.pkl", data)
-    data.seek(0)
-    model = joblib.load(data)
+# TODO provide secrets to k8s and then read from bucket
+# bucket_name = "mlops-hw3-vos"
+# s3 = boto3.resource("s3")
+# with BytesIO() as data:
+#     s3.Bucket(bucket_name).download_fileobj("baseline_model.pkl", data)
+#     data.seek(0)
+#     model = joblib.load(data)
+model = joblib.load("hw_models/model.pkl")
 
 app = FastAPI()
 

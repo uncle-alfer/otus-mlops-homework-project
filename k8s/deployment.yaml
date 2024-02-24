@@ -5,7 +5,7 @@ metadata:
   labels:
     app: predictor
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: predictor
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: predictor
-        image: mlops-hw8:latest
-        ports:
-        - containerPort: 80
+        image: unclealfer/mlops-hw8:latest
+        # ports:
+        # - containerPort: 80
