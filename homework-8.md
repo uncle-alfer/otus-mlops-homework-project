@@ -2,9 +2,9 @@
 
 ## Ссылки
 
-[Ссылка на манифесты](https://github.com/uncle-alfer/otus-mlops-homework-project/tree/main/k8s)
-[Ссылка на Dockerfile с приложением](https://github.com/uncle-alfer/otus-mlops-homework-project/blob/main/Dockerfile)
-[Ссылка на api](https://github.com/uncle-alfer/otus-mlops-homework-project/blob/main/src/prediction/main.py)
+- [Ссылка на манифесты](https://github.com/uncle-alfer/otus-mlops-homework-project/tree/main/k8s)
+- [Ссылка на Dockerfile с приложением](https://github.com/uncle-alfer/otus-mlops-homework-project/blob/main/Dockerfile)
+- [Ссылка на api](https://github.com/uncle-alfer/otus-mlops-homework-project/blob/main/src/prediction/main.py)
 
 
 ## Что было сделано
