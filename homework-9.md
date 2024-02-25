@@ -18,6 +18,8 @@
 - В Grafana был добавлен дашборд для метрики "alert_counter"
 - В Grafana был добавлен алерт на событие "alert_counter>5"
 
+При вызове сервиса со значением terminal_id=13 счетчик alert_counter сбрасывается.
+
 ## Скрины с демонстрацией работы
 
 Активный ServiceMonitor в Prometheus Targets:
@@ -33,3 +35,9 @@
 
 Сработавший алерт
 ![изображение](https://github.com/uncle-alfer/otus-mlops-homework-project/assets/70284100/27afb606-d50d-43f0-b5a3-7bf508374023)
+
+Сброс счетчика (вызов сервиса со значением terminal_id=13)
+![изображение](https://github.com/uncle-alfer/otus-mlops-homework-project/assets/70284100/58240a01-07da-469a-a947-bc395c6f4c46)
+
+Нормальизация алерта
+![изображение](https://github.com/uncle-alfer/otus-mlops-homework-project/assets/70284100/54a0995f-7ff9-4f58-bb6c-41051e58c033)
