@@ -2,12 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   name: predictor-service
+  labels:
+    app: predictor
 spec:
-  type: LoadBalancer
-  ports:
-  - port: 80
-    name: plaintext
-    targetPort: 8000
-  # Kubernetes-метки селектора, использованные в шаблоне подов при создании объекта Deployment.
   selector:
     app: predictor
+  type: LoadBalancer
+  ports:
+    - port: 80
+      name: predictor
+      targetPort: 8000
+  # Kubernetes-метки селектора, использованные в шаблоне подов при создании объекта Deployment.
+  

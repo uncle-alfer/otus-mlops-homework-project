@@ -6,6 +6,8 @@
 import joblib
 from fastapi import Depends, FastAPI
 from pydantic import BaseModel
+from starlette_exporter import PrometheusMiddleware, handle_metrics
+from prometheus_client import Counter
 
 
 class Transaction(BaseModel):
@@ -28,6 +30,11 @@ class Transaction(BaseModel):
 model = joblib.load("hw_models/model.pkl")
 
 app = FastAPI()
+app.add_middleware(PrometheusMiddleware)
+app.add_route("/metrics", handle_metrics)
+
+ZERO_COUNTER = Counter("zero_answered", "zero_answered")
+ALERT_COUNTER = Counter("alert_counter", "alert_counter")
 
 
 @app.get("/")
@@ -43,5 +50,13 @@ def predict(transaction: Transaction = Depends()):
         int(transaction.tx_time_seconds),
         int(transaction.tx_time_days),
     ]
+    # fake event for resetting counter
+    if int(transaction.terminal_id) == 13:
+        ALERT_COUNTER.reset()
+    else:
+        ALERT_COUNTER.inc()
     pred = model.predict([inf])
-    return {"pred": int(pred)}
+    ans = int(pred)
+    if ans == 0:
+        ZERO_COUNTER.inc()
+    return {"pred": ans}

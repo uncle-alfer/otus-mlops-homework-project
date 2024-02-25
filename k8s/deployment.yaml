@@ -17,5 +17,5 @@ spec:
       containers:
       - name: predictor
         image: unclealfer/mlops-hw8:latest
-        # ports:
-        # - containerPort: 80
+        ports:
+        - containerPort: 8000
