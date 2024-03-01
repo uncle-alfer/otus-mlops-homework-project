@@ -1,0 +1,21 @@
+- name: Airflow playbook
+  hosts: airflow
+  remote_user: airflow
+
+  tasks:
+    - name: Install and setup airflow
+      ansible.builtin.shell: |
+        git clone https://github.com/uncle-alfer/otus-mlops-homework-project.git
+        cd otus-mlops-homework-project/project/airflow
+        sudo apt update
+        sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" -y
+        apt-cache policy docker-ce
+        sudo apt install docker-ce -y
+        mkdir -p ./logs ./plugins ./config
+        echo -e "AIRFLOW_UID=$(id -u)" > .env
+        sudo docker compose up airflow-init
+        sudo docker compose up --build
+      args:
+        executable: /bin/bash

@@ -1,0 +1,2 @@
+# fill
+mlflow server --backend-store-uri postgresql://mlflow:mlflow@rc1a-wgi89ogcf4cl2xrb.mdb.yandexcloud.net:6432/mlflow --default-artifact-root s3://project-mlops-object-storage/mlflow/artifacts --serve-artifacts -h 0.0.0.0 -p 8000

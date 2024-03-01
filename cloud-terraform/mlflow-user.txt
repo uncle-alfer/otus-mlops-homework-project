@@ -1,0 +1,8 @@
+#cloud-config
+users:
+  - name: mlflow
+    groups: sudo
+    shell: /bin/bash
+    sudo: 'ALL=(ALL) NOPASSWD:ALL'
+    ssh-authorized-keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDd+B154/X42HOPaGMscYM/vnEujm8UexK+t42/AhkgJ ox\ox@ox
