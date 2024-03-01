@@ -2,7 +2,7 @@ resource "yandex_mdb_kafka_cluster" "kafka" {
   environment         = "PRODUCTION"
   name                = "kafka"
   network_id          = "enpc088i7mdlm4ocijh6"
-  subnet_ids          = "e9bbjfj1bl3choicj6fh"
+  subnet_ids          = [ "e9bbjfj1bl3choicj6fh" ]
   security_group_ids  = [ "enpvb37su7rtfdoh8m0o" ]
   deletion_protection = true
 
