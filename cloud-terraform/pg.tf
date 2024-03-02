@@ -53,23 +53,23 @@ module "mlflow-db" {
   owners = [
     {
       name       = "mlflow"
-      password   = "mlflow"
+      password   = "mlflow-pass"
       conn_limit = 15
     }
   ]
 
-  users = [
-    {
-      name        = "mlflow"
-      password    = "mlflow"
-      conn_limit  = 30
-      permissions = ["mlflow"]
-      settings = {
-        pool_mode                   = "transaction"
-        prepared_statements_pooling = true
-      }
-    }
-  ]
+  # users = [
+  #   {
+  #     name        = "mlflow"
+  #     password    = "mlflmlflow-passow"
+  #     conn_limit  = 30
+  #     permissions = ["mlflow"]
+  #     settings = {
+  #       pool_mode                   = "transaction"
+  #       prepared_statements_pooling = true
+  #     }
+  #   }
+  # ]
 }
 
 output "postgresql_cluster_id" {

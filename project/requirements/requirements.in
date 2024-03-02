@@ -1,0 +1,11 @@
+fastapi
+scipy
+pandas
+pyarrow
+uvicorn
+s3fs
+boto3
+joblib
+scikit-learn
+starlette_exporter
+prometheus-client
