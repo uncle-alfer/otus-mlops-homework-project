@@ -2,6 +2,7 @@ fastapi
 scipy
 pandas
 pyarrow
+mlflow
 uvicorn
 s3fs
 boto3
