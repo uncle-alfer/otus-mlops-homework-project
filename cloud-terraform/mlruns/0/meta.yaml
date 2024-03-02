@@ -1,0 +1,6 @@
+artifact_location: file:///home/terraform/otus-mlops-homework-project/cloud-terraform/mlruns/0
+creation_time: 1709419821075
+experiment_id: '0'
+last_update_time: 1709419821075
+lifecycle_stage: active
+name: Default
