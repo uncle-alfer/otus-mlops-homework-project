@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-deployment
+  labels:
+    app: project
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: project
+  template:
+    metadata:
+      labels:
+        app: project
+    spec:
+      containers:
+      - name: project
+        image: unclealfer/project:latest
+        ports:
+        - containerPort: 8000

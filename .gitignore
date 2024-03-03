@@ -12,3 +12,5 @@ __pycache__
 */airflow/logs/
 project/airflow/keys/credentials
 project/airflow/keys/config
+
+.aws
