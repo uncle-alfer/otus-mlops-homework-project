@@ -18,11 +18,11 @@ dag = DAG(
     start_date = airflow.utils.dates.days_ago(1)
 )
 
-install_deps = BashOperator(
-    task_id='install_deps',
-    bash_command='pip install xgboost mlflow',
-    dag=dag
-)
+# install_deps = BashOperator(
+#     task_id='install_deps',
+#     bash_command='pip install xgboost mlflow',
+#     dag=dag
+# )
 
 train_model = BashOperator(
     task_id='train_model',
@@ -33,7 +33,8 @@ train_model = BashOperator(
     dag=dag
 )
 
-install_deps >> train_model
+# install_deps >> train_model
+train_model
 
 if __name__ == "__main__":
     dag.cli()

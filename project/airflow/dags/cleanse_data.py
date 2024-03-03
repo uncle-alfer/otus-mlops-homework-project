@@ -18,11 +18,11 @@ dag = DAG(
     start_date = airflow.utils.dates.days_ago(1)
 )
 
-install_deps = BashOperator(
-    task_id='install_deps',
-    bash_command='pip install scipy s3fs',
-    dag=dag
-)
+# install_deps = BashOperator(
+#     task_id='install_deps',
+#     bash_command='pip install scipy s3fs',
+#     dag=dag
+# )
 
 cleanse_data = BashOperator(
     task_id='cleanse_data',
@@ -33,7 +33,8 @@ cleanse_data = BashOperator(
     dag=dag
 )
 
-install_deps >> cleanse_data
+# install_deps >> cleanse_data
+cleanse_data
 
 if __name__ == "__main__":
     dag.cli()
