@@ -1,0 +1,2 @@
+MLFLOW_S3_ENDPOINT_URL=https://storage.yandexcloud.net/
+MLFLOW_TRACKING_URI=http://<внутренний_IP-адрес_виртуальной_машины>:8000

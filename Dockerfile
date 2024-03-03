@@ -5,6 +5,7 @@ WORKDIR /app
 COPY setup.py setup.py
 COPY scripts/start_hw8.sh start.sh
 COPY requirements/requirements-hw8.txt requirements.txt
+COPY hw_models/ hw_models/
 COPY src/ src/
 COPY .git/ .git/
 
@@ -19,4 +20,4 @@ USER predictor
 
 EXPOSE 8000
 
-CMD ["start.sh"]
+CMD ["./start.sh"]

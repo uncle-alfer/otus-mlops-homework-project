@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: predictor-deployment
+  name: project-deployment
   labels:
-    app: predictor
+    app: project
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: predictor
+      app: project
   template:
     metadata:
       labels:
-        app: predictor
+        app: project
     spec:
       containers:
-      - name: predictor
-        image: unclealfer/mlops-hw8:latest
+      - name: project
+        image: unclealfer/project:latest
         ports:
         - containerPort: 8000
