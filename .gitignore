@@ -8,3 +8,7 @@ __pycache__
 .vscode
 
 *.terraform*
+
+*/airflow/logs/
+project/airflow/keys/credentials
+project/airflow/keys/config
