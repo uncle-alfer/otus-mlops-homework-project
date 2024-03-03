@@ -2,16 +2,17 @@
 
 # from io import BytesIO
 
+import logging
+
 # import boto3
 import os
-import logging
+
 import pandas as pd
 from fastapi import Depends, FastAPI
+from mlflow.tracking import MlflowClient
+from prometheus_client import Counter
 from pydantic import BaseModel
 from starlette_exporter import PrometheusMiddleware, handle_metrics
-from prometheus_client import Counter
-
-from mlflow.tracking import MlflowClient
 
 import mlflow
 
@@ -25,6 +26,7 @@ model_version = client.get_model_version_by_alias(name="inf1", alias="champion")
 model = mlflow.pyfunc.load_model(model_version.source)
 
 bucket_name = "project-mlops-object-storage"
+
 
 class Сustomer(BaseModel):
     credit_score: int
@@ -66,7 +68,18 @@ def predict(customer: Сustomer = Depends()):
         float(customer.is_active_member),
         float(customer.estimated_salary),
     ]
-    features = ["CreditScore", "Geography", "Gender", "Age", "Tenure", "Balance", "NumOfProducts", "HasCrCard", "IsActiveMember", "EstimatedSalary",]
+    features = [
+        "CreditScore",
+        "Geography",
+        "Gender",
+        "Age",
+        "Tenure",
+        "Balance",
+        "NumOfProducts",
+        "HasCrCard",
+        "IsActiveMember",
+        "EstimatedSalary",
+    ]
     df = pd.DataFrame([inf], columns=features)
 
     pred = model.predict(df)
